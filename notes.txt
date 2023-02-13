@@ -1,0 +1,25 @@
+Root container oluşturuluyor 
+__________________________________________________________________________________________________________________
+                        rootContainer := widget.NewContainer(
+                            widget.ContainerOpts.BackgroundImage(image.NewNineSliceColor(color.RGBA{0x13, 0x1a, 0x22, 0xff})),
+Layout belirliyorsun		widget.ContainerOpts.Layout(widget.NewStackedLayout(widget.StackedLayoutOpts.Padding(widget.NewInsetsSimple(25)))),
+	                        )
+__________________________________________________________________________________________________________________
+
+
+container olusturuyon
+__________________________________________________________________________________________________________________
+	bottomContainer := widget.NewContainer(
+		// the container will use an anchor layout to layout its single child widget
+		widget.ContainerOpts.Layout(widget.NewAnchorLayout()),
+	)
+
+Button olusturuyon widget button turunde
+__________________________________________________________________________________________________________________
+	bottomButton := widget.NewButton(
+		widget.ButtonOpts.WidgetOpts(
+			widget.WidgetOpts.LayoutData(widget.AnchorLayoutData{
+				HorizontalPosition: widget.AnchorLayoutPositionEnd,
+				VerticalPosition:   widget.AnchorLayoutPositionEnd,
+			}),
+		),
