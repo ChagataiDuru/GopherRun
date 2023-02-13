@@ -9,6 +9,7 @@ import (
 	"github.com/ebitenui/ebitenui/widget"
 	"github.com/golang/freetype/truetype"
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"golang.org/x/image/font"
 	"golang.org/x/image/font/gofont/goregular"
 )
@@ -56,7 +57,8 @@ func CenterButton() *widget.Button {
 
 		// add a handler that reacts to clicking the button
 		widget.ButtonOpts.ClickedHandler(func(args *widget.ButtonClickedEventArgs) {
-			println("centered button clicked")
+			println("start button clicked")
+			isStarted = true
 		}),
 	)
 	return button
@@ -158,6 +160,8 @@ func Container() *widget.Container {
 	return rootContainer
 }
 
+var isStarted bool
+
 func main() {
 
 	ui := ebitenui.UI{
@@ -178,6 +182,16 @@ func main() {
 	}
 }
 
+var img *ebiten.Image
+
+func init() {
+	var err error
+	img, _, err = ebitenutil.NewImageFromFile("gopher.png")
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
 func (g *game) Layout(outsideWidth int, outsideHeight int) (int, int) {
 	return outsideWidth, outsideHeight
 }
@@ -190,5 +204,9 @@ func (g *game) Update() error {
 
 // Draw implements Ebiten's Draw method.
 func (g *game) Draw(screen *ebiten.Image) {
-	g.ui.Draw(screen)
+	if !isStarted {
+		g.ui.Draw(screen)
+	} else {
+		screen.DrawImage(img, nil)
+	}
 }
